@@ -1,0 +1,120 @@
+<?php
+// index.php (HTML served by PHP - no server logic required)
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QuizMaster — Dynamic Quiz Application</title>
+
+  <!-- Fonts & Chart.js -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>QuizMaster</h1>
+      <p class="subtitle">Test your knowledge across multiple categories</p>
+    </header>
+
+    <main>
+      <!-- Landing / Controls -->
+      <section id="landing" class="card">
+        <h2 style="text-align:center;margin-bottom:10px;">Choose a Category</h2>
+
+        <!-- Category buttons (replaces dropdown) -->
+        <div id="categoryButtons" class="category-buttons" aria-label="Categories"></div>
+
+        <div class="controls" style="justify-content:center;margin-top:12px;">
+          <label>Difficulty:
+            <select id="difficultySelect" aria-label="Difficulty">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </label>
+
+          <label>Question Time (s):
+            <input id="questionTime" type="number" min="5" value="20" aria-label="Question Time">
+          </label>
+        </div>
+
+        <div style="text-align:center;margin-top:16px;">
+          <button id="startBtn" class="btn">Start Quiz</button>
+          <button id="previewBtn" class="btn secondary">Preview Questions</button>
+        </div>
+      </section>
+
+      <!-- Quiz area (hidden until quiz starts) -->
+      <section id="quizArea" class="card hidden" aria-live="polite">
+        <div class="quizTop">
+          <div id="timer">Time left: <span id="timeLeft">0</span>s</div>
+          <div id="progress">Question <span id="qIndex">1</span> / <span id="qTotal">0</span></div>
+        </div>
+
+        <div id="questionBox" class="questionBox"></div>
+        <div id="optionsBox" class="options"></div>
+
+        <div class="nav" style="margin-top:14px;">
+          <button id="prevBtn" class="btn secondary">Previous</button>
+          <button id="nextBtn" class="btn">Next</button>
+          <button id="submitBtn" class="btn danger">Submit Quiz</button>
+        </div>
+
+        <div id="navDots" class="navDots" style="margin-top:12px;"></div>
+      </section>
+
+      <!-- Results -->
+      <section id="resultArea" class="card hidden">
+        <h2>Result Summary</h2>
+        <div class="resultSummary">
+          <p>Total Questions: <span id="resTotal"></span></p>
+          <p>Correct: <span id="resCorrect"></span></p>
+          <p>Incorrect: <span id="resIncorrect"></span></p>
+          <p>Score: <span id="resScore"></span>%</p>
+        </div>
+
+        <div class="charts">
+          <div class="chartCard">
+            <h3>Time Spent per Question (s)</h3>
+            <canvas id="timeChart"></canvas>
+          </div>
+          <div class="chartCard">
+            <h3>Correct vs Incorrect</h3>
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+
+        <h3>Detailed Breakdown</h3>
+        <div id="breakdown"></div>
+
+        <div style="text-align:center;margin-top:14px;">
+          <button id="retryBtn" class="btn">Take Another Quiz</button>
+          <button id="downloadBtn" class="btn secondary">Download Results (JSON)</button>
+        </div>
+      </section>
+
+      <!-- Preview modal -->
+      <section id="previewModal" class="card hidden">
+        <h3>All Questions Preview</h3>
+        <div id="previewList" style="max-height:360px;overflow:auto;"></div>
+        <div style="text-align:right;margin-top:8px;">
+          <button id="closePreviewBtn" class="btn secondary">Close Preview</button>
+        </div>
+      </section>
+    </main>
+
+    <footer style="text-align:center;margin-top:18px;">
+      <small>Built with HTML / CSS / JS — No backend required</small>
+    </footer>
+  </div>
+
+  <!-- Data & App -->
+  <script src="assets/questions.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
